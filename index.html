@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>fiddleHubJS</title>
+<style>
+	a {
+		color: #FFFFFF;
+	}
+
+	body {
+		font-family: arial, sans-serif;
+		color: #FFFFFF;
+		background: #3D668F;
+	}
+
+	html, body {
+		top:0px;
+		width: 100%;
+		height: 100%;
+		padding: 0px;
+		margin: 0px;
+		overflow: hidden;
+	}
+	
+	#jsFiddleFrame {
+		width: 100%;
+		margin: 0px;
+		padding: 0px;
+		border: 0px solid black;
+	}
+	
+	#controls {
+		top: 0px;
+		display: inline;
+		padding: 0px 0px 0px 5px;
+		margin: 0px;
+		line-height: 23px;
+	}
+	
+	#indicator {
+		display: none;
+	}
+	
+	#originalLink {
+		cursor: pointer;
+		text-decoration: none;
+		border-bottom: 1px solid;
+	}
+	
+	#aboutLink {
+		cursor: pointer;
+		text-decoration: none;
+		border-bottom: 1px dotted;
+	}
+	
+	#about {
+		width: 700px;
+		padding: 10px;
+		position: absolute;
+		background: #567FA8;
+		overflow-y: scroll;
+		border: 0px solid #FFFFFF;
+		display: none;
+	}
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js'></script>
+<script src='http://documentcloud.github.com/underscore/underscore-min.js'></script>
+<script src='http://documentcloud.github.com/backbone/backbone-min.js'></script>
+
+<script src='base64.js'></script>
+<script src='URI.js'></script>
+<script src='fiddleHub.js'></script>
+
+<script>
+$(function () {
+	var about = $('#about'),
+			aboutLink = $('#aboutLink'),
+			frame = $('#jsFiddleFrame');
+
+	function resize() {
+		frame.height($(window).height() - frame.offset().top);
+		about.height($(window).height() - about.offset().top);
+	}
+	
+	function checkHash() {
+		(window.location.hash == '' || window.location.hash == '#') ? about.show() : about.hide();
+	};
+	
+	aboutLink.click(function() {
+		about.is(':hidden') ? about.show() : about.hide();
+	});
+	
+	resize();
+	checkHash();
+	
+	$(window).bind('hashchange', checkHash);
+	$(window).resize(resize);
+});
+</script>
+</head>
+
+<body>
+	<div id='controls'>
+		fiddleHubJS
+		<select id='files'></select>
+		
+		<a id='originalLink' target='_blank' title='Open original Github file in new tab'>Original</a>
+		<a id='aboutLink'>About</a>
+		
+		<img id='indicator' src='loader.gif'>
+	</div>
+	
+	<div id='about'>
+		<p>fiddleHubJS is a small utility to quickly demonstrate your javascript stuff from <a href='http://github.com'>GitHub</a> in <a href='http://jsfiddle.net'>jsFiddle</a>.</p>
+
+		<p>If it's a <code>.html</code> file, everything in <code>&#60;script src=&#39;&#8230;&#39;&#62;&#60;/script&#62;</code> will go into fiddle dependencies, body and inline script tags in HTML and JavaScript windows accordingly. Files with "js" extension will load up to javascript window untouched.</p>
+
+		It works by using <a href='http://developer.github.com/v3/'>GitHub API v3</a> and <a href='http://doc.jsfiddle.net/api/post.html'>jsFiddle POST API</a>.
+
+		<h1>Usage</h1>
+		<p>Just add github file or repo url after the hash.</p>
+		<ul>
+			<li><a href='#https://github.com/mrdoob/three.js/blob/master/examples/canvas_geometry_text.html'>#https://github.com/mrdoob/three.js/blob/master/examples/canvas_geometry_text.html</a></li>
+			
+			<li><a href='#https://github.com/agentcooper/Euler-JS/blob/master/avva1567/index.html'>#https://github.com/agentcooper/Euler-JS/blob/master/avva1567/index.html</a></li>
+
+			<li><a href='#https://github.com/agentcooper/Euler-JS'>#https://github.com/agentcooper/Euler-JS</a> (repo link)</li>
+		</ul>
+
+		<h1>Why?</h1>
+		<p>Well, I was doing some problems at <a href='http://projecteuler.net/'>Project Euler</a>, using repo at github, and wanted to show them using jsFiddle. Now I can, check them out! :-)</p>
+
+		<h1>Known bugs:</h1>
+		<ul>
+			<li>Some scripts require body tag, so you need to manually switch to <i>No-Wrap (body)</i>, and press <i>Run</i> again.</li>
+		</ul>
+
+		<h1>Links</h1>
+		<ul>
+			<li><a href='https://github.com/agentcooper'>Me at GitHub</a></li>
+		</ul>
+	</div>
+	
+	<iframe name="fiddleFrame" id='jsFiddleFrame'></iframe>
+</body>
+</html>
