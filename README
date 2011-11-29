@@ -3,3 +3,4 @@ http://agentcooper.github.com/fiddleHubJS/
 TO-DO:
 - Chrome extension and bookmarklet
 - Github.Gist integration
+- <script> tags with type other than javascript (like templates) should not go into javascript window 
